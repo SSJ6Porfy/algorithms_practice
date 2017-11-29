@@ -27,11 +27,45 @@ end
 ex1 = 'abcdef'
 ex2 = 'cbafed'
 
-p is_Permutation?(ex1, ex2)
+# p is_Permutation?(ex1, ex2)
 
 def urlify(str)
     str.split(' ').join('%20')
 end
 
-str = 'Mr John Smith    '
-p urlify(str)
+# str = 'Mr John Smith    '
+# p urlify(str)
+
+
+def permutations(arr)
+    return [arr] if arr.length == 1
+
+    first = arr.shift
+    perms = permutations(arr)
+
+    all_perms = []
+
+    perms.each do |perm|
+        (0..perm.length).each do |i|
+            all_perms << perm[0...i] + [first] + perm[i..-1]
+        end
+    end
+
+    return all_perms
+end
+
+def palin_perm?(str)
+    arr = []
+    str.each_char { |char| arr << char.downcase if char =~ /[A-z]/ }
+    perms = permutations(arr)
+
+    perms.each do |perm|
+        p perm.join('')
+        return true if perm.join("") == perm.join("").reverse
+    end
+
+    false
+end
+
+str = 'Tact Coa'
+p palin_perm?(str)
