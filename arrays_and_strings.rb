@@ -67,5 +67,36 @@ def palin_perm?(str)
     false
 end
 
-str = 'Tact Coa'
-p palin_perm?(str)
+# str = 'Tact Coa'
+# p palin_perm?(str)
+
+def one_away(str1, str2)
+    return false if (str1.length - str2.length).abs > 1
+    count = 0
+    str1_hash = {}
+
+    str1.each_char do |char|
+        str1_hash[char] = true
+    end
+
+    str2.each_char do |char|
+        count += 1 unless str1_hash.has_key?(char)
+    end
+
+    count < 2 ? true : false
+end
+
+str1 = 'pale'
+str2 = 'pales'
+str3 = 'bale'
+str4 = 'bake'
+str5 = 'ple'
+
+p one_away(str1, str5)
+p one_away(str2, str1)
+p one_away(str1, str3)
+p one_away(str1, str4)
+
+
+
+
