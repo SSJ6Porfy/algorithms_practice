@@ -86,17 +86,42 @@ def one_away(str1, str2)
     count < 2 ? true : false
 end
 
-str1 = 'pale'
-str2 = 'pales'
-str3 = 'bale'
-str4 = 'bake'
-str5 = 'ple'
+# str1 = 'pale'
+# str2 = 'pales'
+# str3 = 'bale'
+# str4 = 'bake'
+# str5 = 'ple'
 
-p one_away(str1, str5)
-p one_away(str2, str1)
-p one_away(str1, str3)
-p one_away(str1, str4)
+# p one_away(str1, str5)
+# p one_away(str2, str1)
+# p one_away(str1, str3)
+# p one_away(str1, str4)
 
+def look_say(str)
+    arr = [[ 1, str[0] ]]
+    (1..str.length - 1).each do |i|
+        if arr.last[1] == str[i]
+            arr.last[0] += 1
+        else
+            arr << [1, str[i]]
+        end
+    end
+    arr.map { |count| "#{count[1]}#{count[0]}" }.join('')
+end
+
+
+def string_comp(str)
+    counted = look_say(str)
+    if str.length <= counted.length
+        str
+    else
+        counted
+    end
+end
+
+str = 'aabcccccaaa'
+
+p string_comp(str)
 
 
 
