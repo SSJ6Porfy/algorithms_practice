@@ -190,7 +190,7 @@ def largest_contigous_subsum(arr)
     max
 end
 
-p largest_contigous_subsum([5,3,-7,6,4])
+# p largest_contigous_subsum([5,3,-7,6,4])
 
 # SET B
 
@@ -222,7 +222,32 @@ def pair_sum(arr, k)
 end
 
 arr = [1, 2, -1, -1, -2]
-p pair_sum(arr, -1)
+# p pair_sum(arr, -1)
+
+# Day 5 
+
+#  SET A
+
+def matirx_region_sum(matrix, top_left, bot_right)
+    result = 0
+
+    row = top_left[0]
+    while row <= bot_right[0]
+        col = top_left[1]
+        while col <= bot_right[1]
+            result += matrix[row][col]
+            col += 1
+        end
+        row += 1
+    end
+    result
+end
+
+mat = [[34,0,1], 
+       [0,1,1], 
+       [34,1,5]]
+
+p matirx_region_sum(mat, [1,1], [2,2])
 
 def max_unique_psub(str)
     max = str[str.length - 1]
@@ -241,3 +266,58 @@ str3 = 'algorithms'
 # p max_unique_psub(str1)
 # p max_unique_psub(str2)
 # p max_unique_psub(str3)
+
+def weighted_random_index(arr)
+    sum = arr.inject(0, :+)
+    value = rand(sum)
+
+    cum_sum = 0
+    arr.each do |num, idx|
+        cum_sum += num
+        return idx if value < cum_sum
+    end
+end
+
+class Stack
+    def initialize
+        @length = 0
+        @store = []
+    end
+
+    def push(el)
+        @length += 1
+        if @store.empty?
+            @store << [el, el]
+        else
+            if el > max
+                @store << [el, el]
+            else
+                @store << [el, max]
+            end
+                
+        end
+    end
+
+    def pop
+        @length -= 1
+        el, max = @store.pop
+        el
+    end
+
+    def max
+        @store.last[1]
+    end
+end
+
+class StackQueue
+
+    def initialize
+        @length = 0
+        @in_stack = Stack.new
+        @out_stack = Stack.new
+    end
+
+    
+
+    
+end
