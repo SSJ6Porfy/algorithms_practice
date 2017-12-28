@@ -34,3 +34,40 @@ def isCryptSolution(crypt, solution)
 end
 
 
+# Maximum Subarray
+# arr = [-2,1,-3,4,-1,2,1,-5,4]
+# returns [4,-1,2,1]
+
+def maximum_subarray(arr)
+    max_arr = []
+    max_sum = 0
+    curr = []
+    curr_sum = 0
+    i = 0
+    while i < arr.size
+        if curr_sum < 0
+            curr_sum = 0
+            curr = []
+        end
+       
+        curr << arr[i]
+        curr_sum += arr[i]
+
+        if curr_sum > max_sum 
+            max_sum = curr_sum
+            first = curr.first
+            last = curr.last
+            max_arr = curr.dup
+            p max_arr
+        end
+        i += 1
+    end
+    
+    max_arr
+end
+
+arr1 = [-2,1,-3,4,-1,2,1,-5,4]
+
+p maximum_subarray(arr1)
+
+
