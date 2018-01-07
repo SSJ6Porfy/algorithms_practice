@@ -247,7 +247,7 @@ mat = [[34,0,1],
        [0,1,1], 
        [34,1,5]]
 
-p matirx_region_sum(mat, [1,1], [2,2])
+# p matirx_region_sum(mat, [1,1], [2,2])
 
 def max_unique_psub(str)
     max = str[str.length - 1]
@@ -279,9 +279,18 @@ def weighted_random_index(arr)
 end
 
 class Stack
+    attr_reader :length, :store
     def initialize
         @length = 0
         @store = []
+    end
+
+    def first
+        @store.first
+    end
+
+    def empty?
+        @store.empty?
     end
 
     def push(el)
@@ -311,13 +320,50 @@ end
 
 class StackQueue
 
+    attr_reader :length
+
     def initialize
         @length = 0
         @in_stack = Stack.new
         @out_stack = Stack.new
     end
 
-    
+    def peek
+        if @out_stack.empty?
+            @out_stack.push(@in_stack.pop) until @in_stack.empty?
+        end
+        @out_stack.first
+    end
 
+    def enqueue(val)
+        @in_stack.push(val)
+    end
+
+    def dequeue
+        if @out_stack.empty?
+            @out_stack.push(@in_stack.pop) until @in_stack.empty?
+        end
+
+        @out_stack.pop
+    end
     
 end
+
+def move_zeros(arr)
+    zero_idx = -1
+    zero_idx -= 1 until arr[zero_idx] != 0
+    count = arr.count(0)
+    (0..arr.length - count - 1).each do |idx|
+        if arr[idx] == 0
+            arr[idx], arr[zero_idx] = arr[zero_idx], arr[idx]
+            zero_idx -= 1 until arr[zero_idx] != 0
+        end
+        break if (zero_idx + count == 0)
+    end
+
+    arr
+end
+
+arr = [1, 2, 0, 3, 4, 0, 5, 6, 0]
+
+p move_zeros(arr)
