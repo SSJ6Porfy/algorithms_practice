@@ -193,4 +193,21 @@ arr = [ [1, 2, 3, 4],
 
 # p zero_matrix(arr)
 
+def rotate_matrix(arr)
+    
+    idx1 = 0
+
+    while idx1 < arr.size / 2
+        idx2 = idx1
+        last = arr.size - idx1 - 1  
+        while idx2 < last
+            offset = idx1 - idx2
+            top = arr[idx1][idx2]
+            arr[idx1][idx2] = arr[last - offset][idx1]
+
+            idx2 += 2
+        end
+        idx1 += 1
+    end
+end
 
