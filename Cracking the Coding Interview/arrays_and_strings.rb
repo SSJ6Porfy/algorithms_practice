@@ -41,38 +41,6 @@ end
 # str = 'Mr John Smith    '
 # p urlify(str)
 
-# Problem (4) wrong answer - O(!n)
-# wrong answer since its factorial time comp
-# def permutations(arr)
-#     return [arr] if arr.length == 1
-
-#     first = arr.shift
-#     perms = permutations(arr)
-
-#     all_perms = []
-
-#     perms.each do |perm|
-#         (0..perm.length).each do |i|
-#             all_perms << perm[0...i] + [first] + perm[i..-1]
-#         end
-#     end
-
-#     return all_perms
-# end
-
-# def palin_perm?(str)
-#     arr = []
-#     str.each_char { |char| arr << char.downcase if char =~ /[A-z]/ }
-#     perms = permutations(arr)
-
-#     perms.each do |perm|
-#         p perm.join('')
-#         return true if perm.join("") == perm.join("").reverse
-#     end
-
-#     false
-# end
-
 # Problem 4 - correct answer
 def palin_perm?(str)
     str = str.downcase
@@ -98,11 +66,8 @@ end
 str1 = 'Tact Coa'
 str2 = 'abbbacc'
 
-p palin_perm?(str1)
-p palin_perm?(str2)
-
-
-
+# p palin_perm?(str1)
+# p palin_perm?(str2)
 
 # str = 'Tact Coa'
 # p palin_perm?(str)
@@ -162,41 +127,48 @@ end
 
 def zero_matrix(matrix)
     row_col = find_zero(matrix)
-    return 'No Zeros found' if row_col.nil?
-    idx = 0 
-    while idx < matrix[row_col[0]].length
-        matrix[row_col[0]][idx] = 0
+    return 'No Zeros found' if row_col.empty?
+    
+    row_col.each do |coords|
+        idx = 0
+        while idx < matrix.length
+            matrix[coords[0]][idx] = 0
         idx += 1
+        end
     end
 
-    idx2 = 0
-
-    while idx2 < matrix.length
-        matrix[idx2][row_col[1]] = 0
-        idx2 += 1
+    row_col.each do |coords|
+        idx = 0
+        while idx < matrix.length
+            matrix[idx][coords[1]] = 0
+        idx += 1
+        end
     end
-
-    matrix
+    matrix.each do |row|
+        p row
+    end
 end
 
 def find_zero(matrix)
+    zeros = []
     row = 0
     while row < matrix.length
         col = 0
         while col < matrix[0].length
-            return [row, col] if matrix[row][col] == 0
+            zeros << [row, col] if matrix[row][col] == 0
             col += 1
         end
         row += 1
     end
+    zeros
 end
 
-arr = [ [1, 2, 3, 4],
+arr = [ [0, 2, 3, 4],
         [5, 6, 0, 8],
         [9, 10, 11, 12],
         [13, 14, 15, 16] ]
 
-# p zero_matrix(arr)
+p zero_matrix(arr)
 
 def rotate_matrix(arr)
     
@@ -215,4 +187,3 @@ def rotate_matrix(arr)
         idx1 += 1
     end
 end
-
