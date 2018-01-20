@@ -20,8 +20,12 @@ end
 # Problem (2)
 
 def is_Permutation?(str1, str2)
-    str1.chars.sort.join == str2.chars.sort.join
-    # O(log n) complexity
+   hash = Hash.new(0)
+   str1.each_char { |chr| hash[chr] += 1 }
+   str2.each_char { |chr| hash[chr] -= 1 }
+   hash.each { |k , v| return false if v != 0 }
+   true
+    # O(n) complexity
 end
 
 ex1 = 'abcdef'
@@ -29,6 +33,7 @@ ex2 = 'cbafed'
 
 # p is_Permutation?(ex1, ex2)
 
+# Problem (3)
 def urlify(str)
     str.split(' ').join('%20')
 end
