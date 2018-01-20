@@ -19,7 +19,7 @@ end
 
 # Problem (2)
 
-def is_Permutation?(str1, str2)
+def is_permutation?(str1, str2)
    hash = Hash.new(0)
    str1.each_char { |chr| hash[chr] += 1 }
    str2.each_char { |chr| hash[chr] -= 1 }
@@ -71,7 +71,7 @@ str2 = 'abbbacc'
 
 # str = 'Tact Coa'
 # p palin_perm?(str)
-
+# Problem 5
 def one_away(str1, str2)
     return false if (str1.length - str2.length).abs > 1
     count = 0
@@ -111,7 +111,7 @@ def look_say(str)
     arr.map { |count| "#{count[1]}#{count[0]}" }.join('')
 end
 
-
+# Problem 6
 def string_comp(str)
     counted = look_say(str)
     if str.length <= counted.length
@@ -125,6 +125,28 @@ end
 
 # p string_comp(str)
 
+# Problem 7
+def rotate_matrix(arr)
+    
+    idx1 = 0
+
+    while idx1 < arr.size / 2
+        idx2 = idx1
+        last = arr.size - idx1 - 1  
+        while idx2 < last
+            offset = idx1 - idx2
+            top = arr[idx1][idx2]
+            arr[idx1][idx2] = arr[last - offset][idx1]
+
+            idx2 += 2
+        end
+        idx1 += 1
+    end
+end
+
+
+
+# Problem 8
 def zero_matrix(matrix)
     row_col = find_zero(matrix)
     return 'No Zeros found' if row_col.empty?
@@ -166,24 +188,25 @@ end
 arr = [ [0, 2, 3, 4],
         [5, 6, 0, 8],
         [9, 10, 11, 12],
-        [13, 14, 15, 16] ]
+        [13, 14, 15, 16]]
 
-p zero_matrix(arr)
+# p zero_matrix(arr)
 
-def rotate_matrix(arr)
-    
-    idx1 = 0
+# Problem 9
+# My answer works
+def string_rotation(str1, str2)
 
-    while idx1 < arr.size / 2
-        idx2 = idx1
-        last = arr.size - idx1 - 1  
-        while idx2 < last
-            offset = idx1 - idx2
-            top = arr[idx1][idx2]
-            arr[idx1][idx2] = arr[last - offset][idx1]
+    check = is_permutation?(str1, str2)
 
-            idx2 += 2
+    if check
+        curr = str2.chars
+
+        str2.length.times do
+            curr << curr.shift
+            return true if curr.join == str1 
         end
-        idx1 += 1
     end
+    false
 end
+
+p string_rotation("baaabbc", "aaabbbc")
