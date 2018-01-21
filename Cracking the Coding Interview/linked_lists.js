@@ -35,16 +35,7 @@ LinkedList.prototype.pop = function() {
     secondLast.prev = null;
 };
 
-LinkedList.prototype.deleteNode = function(val) {
-    let node = this.head;
-
-    while (node) {
-        node = node.next;
-        if (node.val === val) {
-            break;
-        }
-    }
-
+LinkedList.prototype.deleteNode = function(node) {
     let prevNode = node.prev;
     let nextNode = node.next;
 
@@ -72,10 +63,73 @@ let newList = new LinkedList;
 newList.push(1);
 newList.push(2);
 newList.push(3);
+newList.push(0);
+newList.push(9);
+newList.push(8);
+newList.push(7);
+newList.push(5);
+newList.push(2);
+
+// Problem 1
+function removeDups(linkedList) {
+    let values = {};
+
+    let node = linkedList.head;
+
+    while (node) {
+        if (values[node.val]) {
+            linkedList.deleteNode(node);
+        }
+        values[node.val] = true;
+        node = node.next;
+    }
+
+    return linkedList;
+}
+
+// removeDups(newList);
+
+// newList.printLinkedList();
+
+// Problem 2
+
+function returnKthToLast(linkedList, k) {
+    let pointer1 = linkedList.head;
+    let pointer2 = linkedList.head;
+    let count = 0;
+
+    while (count < k + 1) {
+        pointer2 = pointer2.next;
+        count++;
+    }
+
+    while (pointer2) {
+        pointer1 = pointer1.next;
+        pointer2 = pointer2.next;
+    }
+
+    return pointer1.val;
+}
+
+// newList.printLinkedList();
+// console.log(returnKthToLast(newList, 4));
+
+// Problem 3
+
+function deleteMiddleNode(node) {
+    let nextNode = node.next;
+    let value = nextNode.val;
+
+    node.val = value;
+    node.next = nextNode.next;
+    nextNode.prev = null;
+    nextNode.next = null;
+}
+
+let node1 = newList.head.next.next;
+
+deleteMiddleNode(node1);
 
 newList.printLinkedList();
 
-newList.deleteNode(2);
-
-newList.printLinkedList();
 

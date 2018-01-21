@@ -16,6 +16,9 @@ function Stack() {
     };
 }
 
+
+
+
 let testStack = new Stack();
 
 testStack.push(1);
