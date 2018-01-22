@@ -1,30 +1,105 @@
-function Stack() {
-    this.store = [];
-
-    this.push = (val) => {
-        this.store.push(val);
-    };
-
-    this.pop = () => {
-        let val = this.store.pop();
-        return val;
-    };
-
-    this.peek = () => {
-        console.log(this.store[this.store.length - 1]);
-        return this.store[this.store.length - 1];
-    };
+class Stack {
+    constructor() {
+        this.store = [];
+        this.length = 0;
+        this.min = null;
+    }
 }
 
+Stack.prototype.push = function(val) {
+    let store = this.store;
+    let min = this.min;
 
+    if (!min) {
+        this.min = val;
+        store.push(val);
+    } else if (min > val) {
+        let value = ((val*2) - min);
+        this.min = val;
+        store.push(value);
+    } else if (min < val) {
+        store.push(val);
+    }
+    this.length++;
+    return this.store;
+};
 
+Stack.prototype.pop = function() {
+    let store = this.store;
+    let val = store.pop();
+    let min = this.min;
+    this.length--;
+    if (min > val) {
+        this.min = ((2*min) - (val));
+        return min;
+    } else {
+        return val;
+    }
+};
+
+Stack.prototype.peek = function() {
+    let store = this.store;
+    return store[this.length - 1];  
+};
+
+Stack.prototype.isEmpty = function() {
+    return this.length === 0;  
+};
+
+Stack.prototype.getMin = function() {
+    return this.min;
+};
+
+class Queue {
+    constructor() {
+        this.store = [];
+        this.length = 0;
+    }
+}
+
+Queue.prototype.enqueue = function(val) {
+    let store = this.store;
+    store.push(val);
+    this.length++;
+    return this.store;
+};
+
+Queue.prototype.dequeue = function() {
+    let store = this.store;
+    let val = store.shift();
+    this.length--;
+    return val;
+};
+
+Queue.prototype.peek = function() {
+    let store = this.store;
+    return store[0];  
+};
+
+Queue.prototype.isEmpty = function() {
+    return this.length === 0;  
+};
 
 let testStack = new Stack();
+let testQueue = new Queue();
+
+testStack.push(3);
+testStack.push(5);
+testStack.push(2);
+testStack.push(4);
+testStack.push(9);
+
+console.log(testStack.store);
+console.log(testStack.getMin());
+
+testStack.pop();
+testStack.pop();
+testStack.pop();
+
+console.log(testStack.store);
+console.log(testStack.getMin());
 
 testStack.push(1);
-testStack.peek();
-testStack.push(2);
-testStack.peek();
-testStack.push(1);
-let val = testStack.pop();
-testStack.peek();
+testStack.pop();
+console.log(testStack.store);
+console.log(testStack.getMin());
