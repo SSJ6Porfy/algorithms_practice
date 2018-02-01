@@ -209,4 +209,42 @@ def string_rotation(str1, str2)
     false
 end
 
-p string_rotation("baaabbc", "aaabbbc")
+# p string_rotation("baaabbc", "aaabbbc")
+
+def version_check(versions)
+	return versions[0] if versions.size == 1 && $API[versions[0]]
+
+	mid = versions.size / 2
+	
+    left = false
+    
+	if $API[versions[mid]]
+        left = version_check(versions[0...mid]) # Left of mid recursive call
+        if left && left < versions[mid]
+            return left
+        else
+            return versions[mid]
+        end
+    else
+        return false if versions[(mid+1)..-1].size == 0
+        version_check(versions[(mid+1)..-1]) # Right side call
+	end
+    
+end
+
+v = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+$API = {
+    1 => true,
+    2 => true,
+    3 => true,
+    4 => true,
+    5 => true,
+    6 => true,
+    7 => true,
+    8 => true,
+    9 => true,
+    10 => true,
+}
+
+p version_check(v)
