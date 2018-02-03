@@ -247,4 +247,58 @@ $API = {
     10 => true,
 }
 
-p version_check(v)
+# p version_check(v)
+
+# Codefights - Count Clouds
+# Done with BFS
+
+def countClouds(skyMap)
+    marker = 0
+    
+    row = 0
+    queue = []
+    while row < skyMap.size
+        col = 0
+        
+        while col < skyMap[row].size
+            
+            if skyMap[row][col] && skyMap[row][col] == "1"
+                marker += 1
+                skyMap[row][col] = marker
+                queue << [row, col] 
+            end
+            
+            until queue.empty?
+                coord = queue.shift
+                
+                left_child = [coord[0], coord[1] - 1] if coord[1] - 1 >= 0
+                right_child = [coord[0], coord[1] + 1] if coord[1] + 1 < skyMap[row].size
+                top_child = [coord[0] - 1, coord[1]] if coord[0] - 1 >= 0
+                bottom_child = [coord[0] + 1, coord[1]] if coord[0] + 1 < skyMap.size
+            
+                if left_child && skyMap[left_child[0]][left_child[1]] == "1"
+                    queue << left_child
+                    skyMap[left_child[0]][left_child[1]] = marker
+                end
+                if right_child && skyMap[right_child[0]][right_child[1]] == "1"
+                    queue << right_child 
+                    skyMap[right_child[0]][right_child[1]] = marker
+                end
+                
+                if top_child && skyMap[top_child[0]][top_child[1]] == "1"
+                    queue << top_child 
+                    skyMap[top_child[0]][top_child[1]] = marker
+                end
+                
+                if bottom_child && skyMap[bottom_child[0]][bottom_child[1]] == "1"
+                    queue << bottom_child 
+                    skyMap[bottom_child[0]][bottom_child[1]] = marker
+                end
+            end
+            col += 1
+        end
+        row += 1
+    end
+    
+    marker
+end
