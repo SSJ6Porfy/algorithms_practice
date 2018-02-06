@@ -302,3 +302,36 @@ def countClouds(skyMap)
     
     marker
 end
+
+# Codefights - Nearest Greater
+# Done with Stack
+
+def nearestGreater(a)
+    
+    result = []
+    stack = []
+  
+    a.each_with_index do |el, i|
+       
+        while !stack.empty? && a[stack[-1]] < el
+            num = stack.pop
+            if result[num] == -1 || (i - num < num - result[num])
+                result[num] = i
+            end
+        end
+        
+        if stack.empty?
+            result[i] = -1 
+        else
+            if el != a[stack[-1]]
+                result[i] = stack[-1]
+            else
+                result[i] = result[stack[-1]]
+            end
+        end
+        stack << i
+    end
+    
+    result
+end
+
