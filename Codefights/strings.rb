@@ -81,3 +81,65 @@ def findFirstSubstringOccurrence(s, x)
     end
    return "good" 
 end
+
+def textJustification(words, l)
+    rows = arr_build(words, l)
+    rows.each_with_index do |row, idx|
+        count = 0
+        
+        row.each { |word| count += word.length }
+        
+        space_count = l - count
+        sp = " " * (space_count / (row.size - 1)) unless row.size == 1
+        
+        if idx == rows.size - 1
+            rows[idx] = [row.join(" ")]
+            count += (row.size - 1)
+            until count >= l
+                rows[idx][0] += " "
+                count += 1
+            end
+        else
+            if sp && (l - count - (sp.length * (row.size - 1)) == 0)
+                rows[idx] = [row.join(sp)]
+            else
+                i = 0
+                while count < l
+                    row[i] += " "
+                    count += 1
+                    i += 1
+                    i = 0 if i >= row.size - 1
+                end
+            end
+        end
+    end
+    rows.map(&:join)
+end
+
+def arr_build(arr, len)
+    
+    queue = []
+    result = [[]]
+    arr.each { |word| queue << word }
+    
+    until queue.empty?
+        curr = queue.shift
+        curr_row = result.last
+        
+        count = curr_row.size
+        chr_count = 0
+        if count > 0
+            curr_row.each { |word| chr_count += word.length }
+        end
+        
+        spaces = count + chr_count
+       
+        if spaces + curr.length <= len
+            curr_row << curr
+        else
+            result << [curr]
+        end
+    end
+    
+    result
+end
