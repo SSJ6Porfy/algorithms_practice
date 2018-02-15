@@ -2,7 +2,7 @@ class Stack {
     constructor() {
         this.store = [];
         this.length = 0;
-        this.min = null;
+        // this.min = null;
     }
 }
 
@@ -10,16 +10,18 @@ Stack.prototype.push = function(val) {
     let store = this.store;
     let min = this.min;
 
-    if (!min) {
-        this.min = val;
-        store.push(val);
-    } else if (min > val) {
-        let value = ((val*2) - min);
-        this.min = val;
-        store.push(value);
-    } else if (min < val) {
-        store.push(val);
-    }
+    // if (!min) {
+    //     this.min = val;
+    //     store.push(val);
+    // } else if (min > val) {
+    //     let value = ((val*2) - min);
+    //     this.min = val;
+    //     store.push(value);
+    // } else if (min < val) {
+    //     store.push(val);
+    // }
+
+    this.store.push(val);
     this.length++;
     return this.store;
 };
@@ -27,14 +29,15 @@ Stack.prototype.push = function(val) {
 Stack.prototype.pop = function() {
     let store = this.store;
     let val = store.pop();
-    let min = this.min;
+    // let min = this.min;
     this.length--;
-    if (min > val) {
-        this.min = ((2*min) - (val));
-        return min;
-    } else {
-        return val;
-    }
+    // if (min > val) {
+    //     this.min = ((2*min) - (val));
+    //     return min;
+    // } else {
+    //     return val;
+    // }
+    return val;
 };
 
 Stack.prototype.peek = function() {
@@ -48,6 +51,44 @@ Stack.prototype.isEmpty = function() {
 
 Stack.prototype.getMin = function() {
     return this.min;
+};
+
+Stack.prototype.sortStack = function() {
+    let unsorted = true;
+    let tempStack = new Stack();
+
+    while (unsorted) {
+        if (this.isEmpty()) {
+            unsorted = false;
+            break;
+        }
+        let temp = this.pop();
+
+        if (tempStack.isEmpty()) {
+            tempStack.push(temp);
+        } else {
+            let tempTop = tempStack.pop();
+            if (temp < tempTop) {
+                while (tempTop !== null && temp < tempTop) {
+                    this.push(tempTop);
+                    tempTop = tempStack.pop();
+                }
+                if (tempTop) {
+                    tempStack.push(tempTop);
+                }
+                tempStack.push(temp);
+            } else {
+                tempStack.push(tempTop);
+                tempStack.push(temp);
+            }
+        }   
+    }
+    
+    while (tempStack.store.length > 0) {
+        this.push(tempStack.pop());
+    }
+    console.log(this.store, tempStack.store);
+    return null;
 };
 
 class Queue {
@@ -85,21 +126,10 @@ let testQueue = new Queue();
 
 testStack.push(3);
 testStack.push(5);
-testStack.push(2);
+testStack.push(1);
 testStack.push(4);
 testStack.push(9);
 
 console.log(testStack.store);
-console.log(testStack.getMin());
 
-testStack.pop();
-testStack.pop();
-testStack.pop();
-
-console.log(testStack.store);
-console.log(testStack.getMin());
-
-testStack.push(1);
-testStack.pop();
-console.log(testStack.store);
-console.log(testStack.getMin());
+testStack.sortStack();
