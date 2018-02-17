@@ -1,3 +1,5 @@
+ const LinkedList = require('./linked_lists.js');
+
 class Node {
     constructor(val) {
         this.val = val;
@@ -64,12 +66,12 @@ let printTree = function(arr) {
 };
 
 
-let root = new Node(1);
+let root1 = new Node(1);
 let child1 = new Node(2);
 let child2 = new Node(3);
 
-root.left = child1;
-root.right = child2;
+root1.left = child1;
+root1.right = child2;
 
 child1.left = new Node(4);
 child1.right = new Node(5);
@@ -99,9 +101,46 @@ let minimalTree = function(arr) {
   return parentNode;
 };
 
-let arr1 = [1,2,3,4,5,6];
+// let arr1 = [1,2,3,4,5,6];
 
-let newTree = minimalTree(arr1);
+// let newTree = minimalTree(arr1);
 
-console.log(newTree);
+// console.log(newTree);
+
+let listOfDepths = function(root) {
+  if (!root) {
+    return null;
+  }
+  let result = [];
+
+  let currentLevel = [root];
+
+  while (currentLevel.length > 0) {
+    let nextLevel = [];
+    let list = new LinkedList();
+    
+    currentLevel.forEach((node) => {
+      list.push(node.val);
+    });
+
+    result.push(list);
+
+    while (currentLevel.length > 0) {
+      let node = currentLevel.shift();
+      if (node.left) {
+        nextLevel.push(node.left);
+      }
+  
+      if (node.right) {
+        nextLevel.push(node.right);
+      }
+    }
+
+    currentLevel = nextLevel;
+  }
+  
+  return result;
+};
+
+listOfDepths(root1);
 

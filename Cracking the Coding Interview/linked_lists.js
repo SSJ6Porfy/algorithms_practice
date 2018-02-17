@@ -58,19 +58,21 @@ LinkedList.prototype.printLinkedList = function() {
     console.log(arr);
 };
 
-let newList = new LinkedList();
+module.exports = LinkedList;
 
-newList.push(1);
-newList.push(2);
-newList.push(3);
-newList.push(0);
-newList.push(9);
-newList.push(8);
-newList.push(7);
-newList.push(5);
-newList.push(2);
+// let newList = new LinkedList();
 
-newList.printLinkedList();
+// newList.push(1);
+// newList.push(2);
+// newList.push(3);
+// newList.push(0);
+// newList.push(9);
+// newList.push(8);
+// newList.push(7);
+// newList.push(5);
+// newList.push(2);
+
+// newList.printLinkedList();
 
 // // Problem 1
 // function removeDups(linkedList) {
