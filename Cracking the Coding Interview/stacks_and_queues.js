@@ -124,11 +124,12 @@ Queue.prototype.isEmpty = function() {
 let testStack = new Stack();
 let testQueue = new Queue();
 
-testStack.push(3);
-testStack.push(5);
-testStack.push(1);
-testStack.push(4);
 testStack.push(9);
+testStack.push(5);
+testStack.push(4);
+testStack.push(3);
+testStack.push(1);
+
 
 console.log(testStack.store);
 
