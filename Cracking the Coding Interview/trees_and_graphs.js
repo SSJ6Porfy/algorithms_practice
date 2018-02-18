@@ -5,8 +5,11 @@ class Node {
         this.val = val;
         this.left = null;
         this.right = null;
+        this.parent = null;
     }
 }
+
+
 
 let bfs = function(root) {
   let result = [];
@@ -185,10 +188,51 @@ let child6 = new Node(7);
 
 root1.left = child1;
 root1.right = child2;
-
 child1.left = child3;
 child1.right = child4;
 child2.left = child5;
 child2.right = child6;
 
-console.log(validBST(root1));
+child1.parent = root1;
+child2.parent = root1;
+child3.parent = child1;
+child4.parent = child1;
+child5.parent = child2;
+child6.parent = child2;
+
+// console.log(validBST(root1));
+
+let successor = function(root) {
+  if (root.right) {
+    return deepestLeftNode(root.right).val;
+  }
+
+  let currentNode = root.parent;
+
+  while (currentNode) {
+    if (currentNode.left.val === root.val) {
+      break;
+    } else if (currentNode.val > root.val) {
+      break;
+    } else {
+      currentNode = currentNode.parent;
+    }
+  }
+  
+  if (currentNode) {
+    return currentNode.val;
+  } else {
+    return -1;
+  }
+  
+};
+
+let deepestLeftNode = function(node) {
+  while (node.left) {
+    node = node.left;
+  }
+  return node;
+};
+
+console.log(successor(root1));
+
