@@ -66,19 +66,6 @@ let printTree = function(arr) {
 };
 
 
-let root1 = new Node(1);
-let child1 = new Node(2);
-let child2 = new Node(3);
-
-root1.left = child1;
-root1.right = child2;
-
-child1.left = new Node(4);
-child1.right = new Node(5);
-child2.left = new Node(6);
-child2.right = new Node(7);
-
-
 // let tree = bfs(root);
 
 // printTree(tree);
@@ -142,5 +129,66 @@ let listOfDepths = function(root) {
   return result;
 };
 
-listOfDepths(root1);
+// listOfDepths(root1);
 
+const dfs = function(root, depth = -1) {
+  if (!root) {
+    return depth;
+  }
+  
+  depth += 1;
+  let left = dfs(root.left, depth);
+  let right = dfs(root.right, depth) ;
+
+  return Math.max(left,right);
+};
+
+const isTreeBalanced = function(root) {
+  if (!root) {
+    return true;
+  }
+
+  let leftSub = dfs(root.left);
+  let rightSub = dfs(root.right);
+
+  return Math.abs(leftSub - rightSub) < 2;
+};
+
+// console.log(isTreeBalanced(root1));
+
+const validBST = function(root, min = null, max = null) {
+  if (!root.left && !root.right) {
+    return true;
+  }
+
+  if ((max && root.left) && root.left.val > max) {
+    return false;
+  } else if ((min && root.right) && root.right.val < min) {
+      return false;
+  } else if ((root.left && root.right) && (root.left.val > root.val || root.right.val < root.val)) {
+    return false;
+  }
+  
+  let result = (validBST(root.left, min = null, max = root.val) &&
+                validBST(root.right, min = root.val, max = null));
+
+  return result;
+};
+
+let root1 = new Node(4);
+let child1 = new Node(2);
+let child2 = new Node(6);
+let child3 = new Node(1);
+let child4 = new Node(3);
+let child5 = new Node(5);
+let child6 = new Node(7);
+
+root1.left = child1;
+root1.right = child2;
+
+child1.left = child3;
+child1.right = child4;
+child2.left = child5;
+child2.right = child6;
+
+console.log(validBST(root1));
