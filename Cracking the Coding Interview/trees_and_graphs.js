@@ -43,6 +43,22 @@ BinarySearchTree.prototype.insert = function(val) {
 };
 
 
+BinarySearchTree.prototype.find = function(val) {
+  let currentNode = this.root;
+
+  while (currentNode) {
+    if (currentNode.val === val) {
+      return currentNode;
+    } else if (currentNode.val > val) {
+      currentNode = currentNode.left;
+    } else {
+      currentNode = currentNode.right;
+    }
+  }
+
+  return -1;
+};
+
 
 let bfs = function(root) {
   let result = [];
@@ -219,7 +235,7 @@ tree1.insert(8);
 tree1.insert(52);
 tree1.insert(17);
 
-console.log(tree1.root.right);
+console.log(tree1.find(18));
 
 // console.log(validBST(root1));
 
