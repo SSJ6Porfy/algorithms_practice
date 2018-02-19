@@ -15,6 +15,20 @@ class BinarySearchTree {
   }
 }
 
+let deepestLeftNode = function(node) {
+  while (node.left) {
+    node = node.left;
+  }
+  return node;
+};
+
+let deepestRightNode = function(node) {
+  while (node.right) {
+    node = node.right;
+  }
+  return node;
+};
+
 BinarySearchTree.prototype.insert = function(val) {
   let currentNode = this.root;
   let newNode = new Node(val);
@@ -57,6 +71,47 @@ BinarySearchTree.prototype.find = function(val) {
   }
 
   return -1;
+};
+
+BinarySearchTree.prototype.delete = function(val) {
+  let currentNode = this.find(val);
+  let replacementNode = null;
+  
+  if (!currentNode) {
+    return -1;
+  }
+
+  let parent = currentNode.parent;
+
+  if (currentNode.left) {
+    replacementNode = deepestRightNode(currentNode.left);
+  } else if (currentNode.right) {
+    replacementNode = deepestLeftNode(currentNode.right);
+  }
+
+  if (replacementNode) {
+    if (parent.val < replacementNode.val) {
+      parent.right = replacementNode;
+      replacementNode.right = currentNode.right;
+    } else {
+      parent.left = replacementNode;
+      replacementNode.left = currentNode.left;
+    }
+  } else {
+    if (parent.val > currentNode.val) {
+      parent.left = null;
+    } else {
+      parent.right = null;
+    }
+  }
+  
+  replacementNode.parent = currentNode.parent;
+
+  currentNode.left = null;
+  currentNode.right = null;
+  currentNode.parent = null;
+  
+  return currentNode;
 };
 
 
@@ -235,7 +290,8 @@ tree1.insert(8);
 tree1.insert(52);
 tree1.insert(17);
 
-console.log(tree1.find(18));
+console.log(tree1.delete(20));
+console.log(tree1.root.right);
 
 // console.log(validBST(root1));
 
@@ -262,13 +318,6 @@ let successor = function(root) {
     return -1;
   }
   
-};
-
-let deepestLeftNode = function(node) {
-  while (node.left) {
-    node = node.left;
-  }
-  return node;
 };
 
 // console.log(successor(root1));
