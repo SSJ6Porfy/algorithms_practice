@@ -9,6 +9,39 @@ class Node {
     }
 }
 
+class BinarySearchTree {
+  constructor(val) {
+    this.root = new Node(val);
+  }
+}
+
+BinarySearchTree.prototype.insert = function(val) {
+  let currentNode = this.root;
+  let newNode = new Node(val);
+
+  while (currentNode) {
+    if (currentNode.val > val) {
+      if (currentNode.left) {
+        currentNode = currentNode.left;
+      } else {
+        currentNode.left = newNode;
+        newNode.parent = currentNode;
+        break;
+      }
+    } else {
+      if (currentNode.right) {
+        currentNode = currentNode.right;
+      } else {
+        currentNode.right = newNode;
+        newNode.parent = currentNode;
+        break;
+      }
+    }
+  }
+
+  return newNode;
+};
+
 
 
 let bfs = function(root) {
@@ -178,27 +211,15 @@ const validBST = function(root, min = null, max = null) {
   return result;
 };
 
-let root1 = new Node(4);
-let child1 = new Node(2);
-let child2 = new Node(6);
-let child3 = new Node(1);
-let child4 = new Node(3);
-let child5 = new Node(5);
-let child6 = new Node(7);
+let tree1 = new BinarySearchTree(6);
+tree1.insert(4);
+tree1.insert(13);
+tree1.insert(20);
+tree1.insert(8);
+tree1.insert(52);
+tree1.insert(17);
 
-root1.left = child1;
-root1.right = child2;
-child1.left = child3;
-child1.right = child4;
-child2.left = child5;
-child2.right = child6;
-
-child1.parent = root1;
-child2.parent = root1;
-child3.parent = child1;
-child4.parent = child1;
-child5.parent = child2;
-child6.parent = child2;
+console.log(tree1.root.right);
 
 // console.log(validBST(root1));
 
@@ -234,5 +255,11 @@ let deepestLeftNode = function(node) {
   return node;
 };
 
-console.log(successor(root1));
+// console.log(successor(root1));
+
+
+// aka Topological Sort
+// let buildOrder = function() {
+
+// };
 
