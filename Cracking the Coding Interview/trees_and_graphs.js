@@ -56,7 +56,6 @@ BinarySearchTree.prototype.insert = function(val) {
   return newNode;
 };
 
-
 BinarySearchTree.prototype.find = function(val) {
   let currentNode = this.root;
 
@@ -97,6 +96,7 @@ BinarySearchTree.prototype.delete = function(val) {
       parent.left = replacementNode;
       replacementNode.left = currentNode.left;
     }
+    replacementNode.parent = currentNode.parent;
   } else {
     if (parent.val > currentNode.val) {
       parent.left = null;
@@ -104,8 +104,6 @@ BinarySearchTree.prototype.delete = function(val) {
       parent.right = null;
     }
   }
-  
-  replacementNode.parent = currentNode.parent;
 
   currentNode.left = null;
   currentNode.right = null;
@@ -113,7 +111,6 @@ BinarySearchTree.prototype.delete = function(val) {
   
   return currentNode;
 };
-
 
 let bfs = function(root) {
   let result = [];
@@ -173,10 +170,6 @@ let printTree = function(arr) {
 };
 
 
-// let tree = bfs(root);
-
-// printTree(tree);
-
 let minimalTree = function(arr) {
   if (arr.length === 1) {
     return new Node(arr[0]);
@@ -195,11 +188,7 @@ let minimalTree = function(arr) {
   return parentNode;
 };
 
-// let arr1 = [1,2,3,4,5,6];
 
-// let newTree = minimalTree(arr1);
-
-// console.log(newTree);
 
 let listOfDepths = function(root) {
   if (!root) {
@@ -290,8 +279,8 @@ tree1.insert(8);
 tree1.insert(52);
 tree1.insert(17);
 
-console.log(tree1.delete(20));
-console.log(tree1.root.right);
+// console.log(tree1.delete(52));
+// console.log(tree1.root.right);
 
 // console.log(validBST(root1));
 
@@ -320,11 +309,27 @@ let successor = function(root) {
   
 };
 
-// console.log(successor(root1));
+let pathsWithSum = function(root, sum = 0, target, count) {
+  if (!root) {
+    return 0;
+  }
 
+  sum += root.val;
 
-// aka Topological Sort
-// let buildOrder = function() {
+  if (sum === target) {
+    return 1;
+  }
 
-// };
+  if (sum > target) {
+    sum = root.val;
+  }
+
+  count += pathsWithSum(root.left, sum, target, count);
+  console.log(count);
+  count += pathsWithSum(root.right, sum, target, count);
+  console.log(count);
+  return count; 
+};
+
+console.log(pathsWithSum(tree1.root, 0, 10, 0));
 

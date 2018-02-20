@@ -1,3 +1,4 @@
+
 function shuffleArray(arr) {
     let length = arr.length;
 
@@ -46,4 +47,39 @@ function foldingCipher(str) {
 
 let str = "zyx";
 
-console.log(foldingCipher(str));
+// console.log(foldingCipher(str));
+
+
+function powerNumbers(num) {
+    let result = new Set();
+    let bound = Math.pow(num, 2);
+    let base = 2;
+    while (result.size < num) {
+        let power = 2;
+        while (Math.pow(base,power) < bound) {
+            result.add(Math.pow(base, power));
+            power += 1;
+        }
+        base += 1;
+    }
+
+    let resultArr = [];
+
+    result.forEach((el) => {
+        resultArr.push(el);
+    });
+
+    function compare(a, b) {
+        if (a < b) {
+          return -1;
+        }
+        if (a > b) {
+          return 1;
+        }
+        return 0;
+      }
+
+    return resultArr.sort(compare);
+}
+
+console.log(powerNumbers(20));
