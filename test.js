@@ -82,4 +82,54 @@ function powerNumbers(num) {
     return resultArr.sort(compare);
 }
 
-console.log(powerNumbers(20));
+// console.log(powerNumbers(20));
+
+class Set {
+    constructor() {
+        this.store = [];
+        this.size = 0;
+    }
+}
+
+Set.prototype.add = function(el) {
+    let idx = this.getIndex(el);
+    if (idx === -1) {
+        this.store.push(el);
+        this.size++;
+    } else {
+        return null;
+    }
+};
+
+Set.prototype.delete = function(el) {
+    let idx = this.getIndex(el);
+    if (idx !== -1) {
+        this.store[idx] = null;
+        let temp = this.store[this.size - 1];
+        this.store[idx] = temp;
+        this.store[this.size - 1] = null;
+        this.size--;
+    } else {
+        return null;
+    }
+};
+
+Set.prototype.getIndex = function(el) {
+    for (let idx = 0; idx < this.size; idx++) {
+        if (this.store[idx] === el) {
+            return idx;
+        }
+    }
+    return -1;
+};
+
+// let setty = new Set;
+
+// setty.add(1);
+// setty.add(2);
+// setty.add(3);
+// setty.add(4);
+// setty.add(5);
+// setty.delete(5);
+
+// console.log(setty.store);
